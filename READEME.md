@@ -1,3 +1,4 @@
-# Qtile Config
+# Configs
 
-Exactly that it says - my qtile config. I try to keep this somewhat cross-device compatible.
+This repository stores my configurations for various things:
+- Qtile (window manager)
