@@ -5,9 +5,13 @@
 # DISPLAY SETTINGS
 # ============================================================================
 
-# Wallpaper background image path (leave empty for solid color)
-# Example: "/home/user/Pictures/wallpapers/mountain.png"
-WALLPAPER = ""
+# Wallpaper background image path(s) (leave empty for solid color)
+# Examples: "/home/user/Pictures/wallpapers/mountain.png"
+#           ["/path/to/wp1.png", "/path/to/wp2.jpg"]  # Multiple wallpapers rotate
+WALLPAPER: list[str] = []
+
+# Wallpaper switch period in seconds (0 to disable rotation)
+WALLPAPER_SWITCH_PERIOD: int = 0
 
 # Fallback background color if no wallpaper is set (Qtile Hex format)
 BACKGROUND_COLOR = "#1a1a2e"
@@ -92,12 +96,17 @@ WIDGET_ROUNDED = 5
 # System tray icon size
 TRAY_ICON_SIZE = 16
 
+# Network interface (leave empty for auto-detect)
+# Run `ip link` or `ip addr` to find your interface
+# Examples: "wlp2s0", "eth0", "enp0s3"
+NET_INTERFACE: str = ""
+
 # ============================================================================
 # BAR SETTINGS
 # ============================================================================
 
 # Bar height in pixels
-BAR_HEIGHT = 24
+BAR_HEIGHT = 40
 
 # Bar background color (can be transparent with opacity)
 BAR_BACKGROUND_COLOR = "#282a36"

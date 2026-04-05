@@ -1,8 +1,4 @@
-import os
-import subprocess
-from typing import List
-
-from libqtile import bar, layout, widget
+from libqtile import bar, hook, layout, qtile, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
@@ -22,11 +18,13 @@ try:
         ICON_SIZE,
         LAUNCHER,
         MOD,
+        NET_INTERFACE,
         NOTIFICATION_DAEMON,
         TERMINAL,
         TRAY_ICON_SIZE,
         UNFOCUSED_BORDER_COLOR,
         WALLPAPER,
+        WALLPAPER_SWITCH_PERIOD,
         WIDGET_PADDING,
         WIDGET_ROUNDED,
     )
@@ -37,7 +35,7 @@ except ImportError:
 if not TERMINAL:
     TERMINAL = guess_terminal()
 
-keys = [
+keys: list[Key] = [
     Key([MOD], "Return", lazy.spawn(TERMINAL), desc="Launch terminal"),
     Key([MOD], "d", lazy.spawn(LAUNCHER), desc="Application launcher"),
     Key([MOD], "b", lazy.spawn(BROWSER), desc="Launch browser"),
@@ -69,7 +67,7 @@ keys = [
     Key([MOD, "shift"], "q", lazy.shutdown(), desc="Logout"),
 ]
 
-groups = [Group(name) for name in GROUPS]
+groups: list[Group] = [Group(name) for name in GROUPS]
 
 for i, group in enumerate(groups):
     keys.extend(
@@ -89,7 +87,7 @@ for i, group in enumerate(groups):
         ]
     )
 
-layouts = [
+layouts: list[layout.Layout] = [
     layout.Columns(
         border_focus=FOCUSED_BORDER_COLOR,
         border_normal=UNFOCUSED_BORDER_COLOR,
@@ -119,7 +117,7 @@ layouts = [
     ),
 ]
 
-widget_defaults = dict(
+widget_defaults: dict[str, object] = dict(
     font=FONT_NAME,
     fontsize=FONT_SIZE,
     padding=WIDGET_PADDING,
@@ -127,13 +125,13 @@ widget_defaults = dict(
     foreground=COLORS["fg"],
 )
 
-extension_defaults = widget_defaults.copy()
+extension_defaults: dict[str, object] = widget_defaults.copy()
 
-def init_widgets_list() -> List[widget.base.ThreadedPollText]:
+def init_widgets_list() -> list[object]:
     return [
         widget.Sep(
             linewidth=0,
-            padding=6,
+            padding=2,
             background=COLORS["bg"],
         ),
         widget.TextBox(
@@ -146,11 +144,11 @@ def init_widgets_list() -> List[widget.base.ThreadedPollText]:
         widget.GroupBox(
             font=FONT_NAME,
             fontsize=ICON_SIZE,
-            margin_y=3,
-            margin_x=5,
-            padding_y=5,
-            padding_x=8,
-            borderwidth=3,
+            margin_y=1,
+            margin_x=2,
+            padding_y=2,
+            padding_x=3,
+            borderwidth=2,
             active=COLORS["fg"],
             inactive=COLORS["selected_bg"],
             rounded=WIDGET_ROUNDED,
@@ -164,143 +162,114 @@ def init_widgets_list() -> List[widget.base.ThreadedPollText]:
             urgent_text=COLORS["red"],
             urgent_background=COLORS["bg"],
         ),
-        widget.TextBox(
-            text=" ",
-            fontsize=ICON_SIZE,
-            background=COLORS["bg"],
-        ),
         widget.CurrentLayout(
             foreground=COLORS["fg"],
             background=COLORS["bg"],
+            padding=2,
         ),
         widget.TextBox(
             text="|",
             foreground=COLORS["pink"],
             background=COLORS["bg"],
-            padding=5,
+            padding=2,
         ),
         widget.WindowName(
             foreground=COLORS["fg"],
             background=COLORS["bg"],
-            max_chars=50,
-            width=300,
+            max_chars=20,
+            width=150,
         ),
-        widget.Sep(
-            linewidth=0,
-            padding=10,
+        widget.Spacer(),
+        widget.CPUGraph(
+            graph_color=COLORS["green"],
             background=COLORS["bg"],
+            padding=3,
         ),
-        widget.TextBox(
-            text=" ",
-            foreground=COLORS["fg"],
+        widget.MemoryGraph(
+            graph_color=COLORS["cyan"],
             background=COLORS["bg"],
+            padding=3,
         ),
-        widget.Sep(
-            linewidth=0,
-            padding=10,
+        widget.NetGraph(
+            graph_color=COLORS["orange"],
             background=COLORS["bg"],
-        ),
-        widget.Net(
-            interface="wlp2s0",
-            format="{down} ↓↑{up}",
-            foreground=COLORS["cyan"],
-            background=COLORS["bg"],
-            padding=5,
-        ),
-        widget.TextBox(
-            text=" ",
-            foreground=COLORS["fg"],
-            background=COLORS["bg"],
-        ),
-        widget.Sep(
-            linewidth=0,
-            padding=10,
-            background=COLORS["bg"],
+            padding=3,
         ),
         widget.ThermalSensor(
-            foreground=COLORS["orange"],
+            foreground=COLORS["yellow"],
             background=COLORS["bg"],
-            padding=5,
+            padding=3,
             threshold=80,
             fmt="🌡{}",
-        ),
-        widget.TextBox(
-            text=" ",
-            foreground=COLORS["fg"],
-            background=COLORS["bg"],
-        ),
-        widget.Sep(
-            linewidth=0,
-            padding=10,
-            background=COLORS["bg"],
+            show_short_text=False,
         ),
         widget.Battery(
             foreground=COLORS["green"],
             background=COLORS["bg"],
-            padding=5,
+            padding=3,
             format="{char} {percent:2.0%}",
             low_foreground=COLORS["red"],
             charge_char="",
             discharge_char=" ",
             empty_char=" ",
             unknown_char="?",
-        ),
-        widget.TextBox(
-            text=" ",
-            foreground=COLORS["fg"],
-            background=COLORS["bg"],
-        ),
-        widget.Sep(
-            linewidth=0,
-            padding=10,
-            background=COLORS["bg"],
+            show_short_text=False,
         ),
         widget.Volume(
-            foreground=COLORS["yellow"],
+            foreground=COLORS["pink"],
             background=COLORS["bg"],
-            padding=5,
+            padding=3,
             fmt="  {}",
-        ),
-        widget.TextBox(
-            text=" ",
-            foreground=COLORS["fg"],
-            background=COLORS["bg"],
-        ),
-        widget.Sep(
-            linewidth=0,
-            padding=10,
-            background=COLORS["bg"],
         ),
         widget.Clock(
             format="%a %b %d  %H:%M",
-            foreground=COLORS["pink"],
+            foreground=COLORS["purple"],
             background=COLORS["bg"],
-        ),
-        widget.TextBox(
-            text=" ",
-            foreground=COLORS["fg"],
-            background=COLORS["bg"],
+            padding=3,
         ),
         widget.Sep(
             linewidth=0,
-            padding=6,
+            padding=2,
             background=COLORS["bg"],
         ),
         widget.Systray(
             icon_size=TRAY_ICON_SIZE,
             background=COLORS["bg"],
-            padding=5,
+            padding=3,
         ),
-        widget.TextBox(
-            text=" ",
-            foreground=COLORS["fg"],
+        widget.Sep(
+            linewidth=0,
+            padding=5,
             background=COLORS["bg"],
         ),
     ]
 
 
-def init_screens():
-    screens = [
+def init_screens() -> list[Screen]:
+    wallpapers: list[str] = WALLPAPER if WALLPAPER else []
+    current_wallpaper_index: int = 0
+
+    def get_current_wallpaper() -> str | None:
+        if wallpapers:
+            return wallpapers[current_wallpaper_index]
+        return None
+
+    def switch_wallpaper() -> None:
+        nonlocal current_wallpaper_index
+        if wallpapers:
+            current_wallpaper_index = (current_wallpaper_index + 1) % len(wallpapers)
+            wallpaper = wallpapers[current_wallpaper_index]
+            for screen in qtile.screens:
+                screen.cmd_set_wallpaper(wallpaper, mode="fill")
+
+    if wallpapers and WALLPAPER_SWITCH_PERIOD > 0:
+        timer: object = hook.timer(
+            WALLPAPER_SWITCH_PERIOD,
+            switch_wallpaper,
+            start=True,
+        )
+
+    screens: list[Screen] = [
         Screen(
             top=bar.Bar(
                 widgets=init_widgets_list(),
@@ -309,16 +278,16 @@ def init_screens():
                 opacity=1,
                 margin=[0, 0, 0, 0],
             ),
-            wallpaper=WALLPAPER if WALLPAPER else None,
-            wallpaper_mode="fill" if WALLPAPER else None,
+            wallpaper=get_current_wallpaper(),
+            wallpaper_mode="fill" if wallpapers else None,
         ),
     ]
     return screens
 
 
-screens = init_screens()
+screens: list[Screen] = init_screens()
 
-mouse = [
+mouse: list[Click | Drag] = [
     Drag(
         [MOD],
         "Button1",
@@ -334,14 +303,14 @@ mouse = [
     Click([MOD], "Button2", lazy.window.bring_to_front()),
 ]
 
-dgroups_key_binder = None
-dgroups_app_rules = []
-follow_mobile_wallpaper = True
-bring_front_click = False
-floats_kept_above = True
-cursor_warp = False
+dgroups_key_binder: str | None = None
+dgroups_app_rules: list[object] = []
+follow_mobile_wallpaper: bool = True
+bring_front_click: bool = False
+floats_kept_above: bool = True
+cursor_warp: bool = False
 
-floating_layout = layout.Floating(
+floating_layout: layout.Floating = layout.Floating(
     border_focus=FOCUSED_BORDER_COLOR,
     border_normal=UNFOCUSED_BORDER_COLOR,
     border_width=BORDER_WIDTH,
@@ -378,10 +347,10 @@ floating_layout = layout.Floating(
     ],
 )
 
-auto_fullscreen = True
-focus_on_window_activation = "smart"
-reconfigure_screens = True
-auto_minimize = True
-wl_input_rules = None
-wl_xcursor_theme = None
-wl_xcursor_size = 24
+auto_fullscreen: bool = True
+focus_on_window_activation: str = "smart"
+reconfigure_screens: bool = True
+auto_minimize: bool = True
+wl_input_rules: str | None = None
+wl_xcursor_theme: str | None = None
+wl_xcursor_size: int = 24
