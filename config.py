@@ -96,24 +96,52 @@ layouts: list[layout.Layout] = [
         margin_on_single=True,
     ),
     layout.Max(),
-    layout.MonadTall(
-        border_focus=FOCUSED_BORDER_COLOR,
-        border_normal=UNFOCUSED_BORDER_COLOR,
-        border_width=BORDER_WIDTH,
-        ratio=0.65,
-        margin=8,
-    ),
-    layout.MonadWide(
-        border_focus=FOCUSED_BORDER_COLOR,
-        border_normal=UNFOCUSED_BORDER_COLOR,
-        border_width=BORDER_WIDTH,
-        ratio=0.65,
-        margin=8,
-    ),
     layout.Floating(
         border_focus=FOCUSED_BORDER_COLOR,
         border_normal=UNFOCUSED_BORDER_COLOR,
         border_width=BORDER_WIDTH,
+    ),
+    layout.Bsp(
+        border_focus=FOCUSED_BORDER_COLOR,
+        border_normal=UNFOCUSED_BORDER_COLOR,
+        border_width=BORDER_WIDTH,
+        margin=8,
+    ),
+    layout.Matrix(
+        border_focus=FOCUSED_BORDER_COLOR,
+        border_normal=UNFOCUSED_BORDER_COLOR,
+        border_width=BORDER_WIDTH,
+        margin=8,
+    ),
+    layout.MonadThreeCol(
+        border_focus=FOCUSED_BORDER_COLOR,
+        border_normal=UNFOCUSED_BORDER_COLOR,
+        border_width=BORDER_WIDTH,
+        margin=8,
+    ),
+    layout.Plasma(
+        border_focus=FOCUSED_BORDER_COLOR,
+        border_normal=UNFOCUSED_BORDER_COLOR,
+        border_width=BORDER_WIDTH,
+        margin=8,
+    ),
+    layout.Spiral(
+        border_focus=FOCUSED_BORDER_COLOR,
+        border_normal=UNFOCUSED_BORDER_COLOR,
+        border_width=BORDER_WIDTH,
+        margin=8,
+    ),
+    layout.TreeTab(
+        border_focus=FOCUSED_BORDER_COLOR,
+        border_normal=UNFOCUSED_BORDER_COLOR,
+        border_width=BORDER_WIDTH,
+        margin=8,
+    ),
+    layout.Zoomy(
+        border_focus=FOCUSED_BORDER_COLOR,
+        border_normal=UNFOCUSED_BORDER_COLOR,
+        border_width=BORDER_WIDTH,
+        margin=8,
     ),
 ]
 
@@ -255,6 +283,7 @@ def init_screens() -> list[Screen]:
         return None
 
     def switch_wallpaper() -> None:
+        qtile.call_later(WALLPAPER_SWITCH_PERIOD, switch_wallpaper)
         nonlocal current_wallpaper_index
         if wallpapers:
             current_wallpaper_index = (current_wallpaper_index + 1) % len(wallpapers)
@@ -263,11 +292,7 @@ def init_screens() -> list[Screen]:
                 screen.cmd_set_wallpaper(wallpaper, mode="fill")
 
     if wallpapers and WALLPAPER_SWITCH_PERIOD > 0:
-        timer: object = hook.timer(
-            WALLPAPER_SWITCH_PERIOD,
-            switch_wallpaper,
-            start=True,
-        )
+        qtile.call_later(WALLPAPER_SWITCH_PERIOD, switch_wallpaper)
 
     screens: list[Screen] = [
         Screen(
