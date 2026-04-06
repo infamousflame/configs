@@ -1,6 +1,29 @@
 # Device-specific configuration for qtile
 # Copy this file to specs.py and customize for your system
 
+
+# ============================================================================
+# KEYBOARD SETTINGS
+# ============================================================================
+
+# Modifier key (mod4 = Super/Windows key, mod1 = Alt)
+MOD = "mod4"
+
+class K:
+    LEFT, DOWN, UP, RIGHT = "hjkl"
+    TERMINAL = "Return"
+    LAUNCHER = "x"
+    BROWSER = "b"
+    FILE_MANAGER = "f"
+    SYSTEM_MONITOR = "s"
+    KILL = "w"
+    NORMALIZE = "n"
+    MAXIMIZE = "m"
+    RESTART = "r"
+    LOGOUT = "q"
+
+
+
 # ============================================================================
 # DISPLAY SETTINGS
 # ============================================================================
@@ -16,6 +39,8 @@ WALLPAPER_SWITCH_PERIOD: int = 0
 # Fallback background color if no wallpaper is set (Qtile Hex format)
 BACKGROUND_COLOR = "#1a1a2e"
 
+LOCK_COMMAND = "xscreensaver-command -lock"
+
 # ============================================================================
 # TERMINAL EMULATOR
 # ============================================================================
@@ -23,6 +48,9 @@ BACKGROUND_COLOR = "#1a1a2e"
 # Your preferred terminal emulator
 # Examples: "kitty", "alacritty", "st", "gnome-terminal", "konsole"
 TERMINAL = "kitty"
+
+# Your preferred system monitor
+SYSTEM_MONITOR = "btop"
 
 # ============================================================================
 # FONTS
@@ -67,13 +95,6 @@ COLORS = {
     "red": "#ff5555",          # Red accent
     "yellow": "#f1fa8c",       # Yellow accent
 }
-
-# ============================================================================
-# KEYBOARD SETTINGS
-# ============================================================================
-
-# Modifier key (mod4 = Super/Windows key, mod1 = Alt)
-MOD = "mod4"
 
 # ============================================================================
 # WORKSPACE/GROUP SETTINGS
