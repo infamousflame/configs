@@ -22,6 +22,7 @@ try:
         MOD,
         NET_INTERFACE,
         NOTIFICATION_DAEMON,
+        SCREENS,
         SYSTEM_MONITOR,
         TERMINAL,
         TRAY_ICON_SIZE,
@@ -253,21 +254,6 @@ def init_widgets_list() -> list[object]:
             background=COLORS["bg"],
             padding=3,
         ),
-        widget.Sep(
-            linewidth=0,
-            padding=2,
-            background=COLORS["bg"],
-        ),
-        widget.Systray(
-            icon_size=TRAY_ICON_SIZE,
-            background=COLORS["bg"],
-            padding=3,
-        ),
-        widget.Sep(
-            linewidth=0,
-            padding=5,
-            background=COLORS["bg"],
-        ),
     ]
 
 
@@ -303,7 +289,7 @@ def init_screens() -> list[Screen]:
             ),
             wallpaper=get_current_wallpaper(),
             wallpaper_mode="fill" if wallpapers else None,
-        ),
+        ) for _ in range(SCREENS)
     ]
     return screens
 

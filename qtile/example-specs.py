@@ -28,6 +28,9 @@ class K:
 # DISPLAY SETTINGS
 # ============================================================================
 
+# Maximum number of monitors you need
+SCREENS: int = 2
+
 # Wallpaper background image path(s) (leave empty for solid color)
 # Examples: "/home/user/Pictures/wallpapers/mountain.png"
 #           ["/path/to/wp1.png", "/path/to/wp2.jpg"]  # Multiple wallpapers rotate
