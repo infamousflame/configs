@@ -18,7 +18,7 @@ class K:
     SYSTEM_MONITOR = "s"
     KILL = "w"
     NORMALIZE = "n"
-    MAXIMIZE = "m"
+    FLOAT = "f"
     RESTART = "r"
     LOGOUT = "q"
 
