@@ -87,6 +87,12 @@ for i, group in enumerate(groups):
     )
 
 layouts: list[layout.Layout] = [
+    layout.Plasma(
+        border_focus=FOCUSED_BORDER_COLOR,
+        border_normal=UNFOCUSED_BORDER_COLOR,
+        border_width=BORDER_WIDTH,
+        margin=8,
+    ),
     layout.Columns(
         border_focus=FOCUSED_BORDER_COLOR,
         border_normal=UNFOCUSED_BORDER_COLOR,
@@ -113,12 +119,6 @@ layouts: list[layout.Layout] = [
         margin=8,
     ),
     layout.MonadThreeCol(
-        border_focus=FOCUSED_BORDER_COLOR,
-        border_normal=UNFOCUSED_BORDER_COLOR,
-        border_width=BORDER_WIDTH,
-        margin=8,
-    ),
-    layout.Plasma(
         border_focus=FOCUSED_BORDER_COLOR,
         border_normal=UNFOCUSED_BORDER_COLOR,
         border_width=BORDER_WIDTH,
