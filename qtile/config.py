@@ -1,5 +1,8 @@
+from subprocess import run
+
 from libqtile import bar, hook, layout, qtile, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
+from libqtile.hook import subscribe
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
@@ -38,6 +41,12 @@ except ImportError:
 
 if not TERMINAL:
     TERMINAL = guess_terminal()
+
+
+@subscribe.startup_once
+def startup():
+    run(["/usr/bin/gnome-keyring-daemon", "--start", "--components=secrets"])
+
 
 keys: list[Key] = [
     Key([MOD], K.TERMINAL, lazy.spawn(TERMINAL), desc="Launch terminal"),
