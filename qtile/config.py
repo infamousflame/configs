@@ -1,4 +1,4 @@
-from subprocess import run
+from subprocess import Popen
 
 from libqtile import bar, hook, layout, qtile, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
@@ -45,8 +45,9 @@ if not TERMINAL:
 
 @subscribe.startup_once
 def startup():
-    run(["/usr/bin/gnome-keyring-daemon", "--start", "--components=secrets"])
-
+    Popen(["/usr/bin/gnome-keyring-daemon", "--start", "--components=secrets"])
+    Popen(["wl-paste", "--type", "text", "--watch", "cliphist", "store"])
+    Popen(["wl-paste", "--type", "image", "--watch", "cliphist", "store"])
 
 keys: list[Key] = [
     Key([MOD], K.TERMINAL, lazy.spawn(TERMINAL), desc="Launch terminal"),
@@ -67,6 +68,7 @@ keys: list[Key] = [
     Key([MOD, "control"], K.UP, lazy.layout.grow_up(), desc="Grow window up"),
     Key([MOD, "control"], K.LEFT, lazy.layout.grow_left(), desc="Grow window left"),
     Key([MOD, "control"], K.RIGHT, lazy.layout.grow_right(), desc="Grow window right"),
+    # Key([MOD], K.PASTE, lazy.spawn("cliphist list | rofi -dmenu -display-columns 2 | cliphist decode | wl-copy"), desc="Open Clipboard History"),
     Key([MOD], K.NORMALIZE, lazy.layout.normalize(), desc="Reset all window sizes"),
     Key([MOD], K.FLOAT, lazy.layout.floating(), desc="Toggle floating layout"),
     Key([MOD], K.RESTART, lazy.restart(), desc="Restart qtile"),
