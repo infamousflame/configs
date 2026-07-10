@@ -144,7 +144,8 @@ class COMMANDS:
     # Application launcher
     LAUNCHER = "dmenu_run"
     # Screenshot tool
-    SCREENSHOT_CMD = "scrot"
+    SCREENSHOT = "slurp | grim -g - - | wl-copy --type image/png"
+    SCREENSHOT_ANNOTATE = "slurp | grim -g - - | swappy -f - -o -"
     # Lock screen
     LOCK = "xscreensaver-command -lock"
     # Notification daemon
