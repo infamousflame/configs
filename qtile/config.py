@@ -12,22 +12,17 @@ try:
         BAR_HEIGHT,
         BAR_POSITION,
         BORDER_WIDTH,
-        BROWSER,
         COLORS,
+        COMMANDS,
         FOCUSED_BORDER_COLOR,
         FONT_NAME,
         FONT_SIZE,
         GROUPS,
         ICON_SIZE,
-        K,
-        LAUNCHER,
-        LOCK_COMMAND,
+        KEYS,
         MOD,
         NET_INTERFACE,
-        NOTIFICATION_DAEMON,
         SCREENS,
-        SYSTEM_MONITOR,
-        TERMINAL,
         TRAY_ICON_SIZE,
         UNFOCUSED_BORDER_COLOR,
         WALLPAPER,
@@ -39,42 +34,42 @@ except ImportError:
     print("specs.py not found! Please create it from the example.")
     exit(1)
 
-if not TERMINAL:
-    TERMINAL = guess_terminal()
+if not COMMANDS.TERMINAL:
+    COMMANDS.TERMINAL = guess_terminal()
 
 
 @subscribe.startup_once
 def startup():
-    Popen(["/usr/bin/gnome-keyring-daemon", "--start", "--components=secrets"])
-    Popen(["wl-paste", "--type", "text", "--watch", "cliphist", "store"])
-    Popen(["wl-paste", "--type", "image", "--watch", "cliphist", "store"])
+    Popen(COMMANDS.STARTUP_KEYRING)
+    Popen(COMMANDS.STARTUP_CLIPBOARD_TEXT)
+    Popen(COMMANDS.STARTUP_CLIPBOARD_IMAGE)
 
 keys: list[Key] = [
-    Key([MOD], K.TERMINAL, lazy.spawn(TERMINAL), desc="Launch terminal"),
-    Key([MOD], K.LAUNCHER, lazy.spawn(LAUNCHER), desc="Application launcher"),
-    Key([MOD], K.BROWSER, lazy.spawn(BROWSER), desc="Launch browser"),
-    Key([MOD], K.FILE_MANAGER, lazy.spawn("thunar"), desc="File manager"),
-    Key([MOD], K.SYSTEM_MONITOR, lazy.spawn(f"{TERMINAL} -e {SYSTEM_MONITOR}"), desc="System monitor"),
-    Key([MOD], K.KILL, lazy.window.kill(), desc="Kill focused window"),
-    Key([MOD], K.DOWN, lazy.layout.down(), desc="Move focus down"),
-    Key([MOD], K.UP, lazy.layout.up(), desc="Move focus up"),
-    Key([MOD], K.LEFT, lazy.layout.left(), desc="Move focus left"),
-    Key([MOD], K.RIGHT, lazy.layout.right(), desc="Move focus right"),
-    Key([MOD, "shift"], K.DOWN, lazy.layout.shuffle_down(), desc="Move window down"),
-    Key([MOD, "shift"], K.UP, lazy.layout.shuffle_up(), desc="Move window up"),
-    Key([MOD, "shift"], K.LEFT, lazy.layout.shuffle_left(), desc="Move window left"),
-    Key([MOD, "shift"], K.RIGHT, lazy.layout.shuffle_right(), desc="Move window right"),
-    Key([MOD, "control"], K.DOWN, lazy.layout.grow_down(), desc="Grow window down"),
-    Key([MOD, "control"], K.UP, lazy.layout.grow_up(), desc="Grow window up"),
-    Key([MOD, "control"], K.LEFT, lazy.layout.grow_left(), desc="Grow window left"),
-    Key([MOD, "control"], K.RIGHT, lazy.layout.grow_right(), desc="Grow window right"),
-    # Key([MOD], K.PASTE, lazy.spawn("cliphist list | rofi -dmenu -display-columns 2 | cliphist decode | wl-copy"), desc="Open Clipboard History"),
-    Key([MOD], K.NORMALIZE, lazy.layout.normalize(), desc="Reset all window sizes"),
-    Key([MOD], K.FLOAT, lazy.layout.floating(), desc="Toggle floating layout"),
-    Key([MOD], K.RESTART, lazy.restart(), desc="Restart qtile"),
-    Key([MOD, "shift"], K.RESTART, lazy.reload_config(), desc="Reload qtile config"),
-    Key([MOD], K.LOGOUT, lazy.spawn(LOCK_COMMAND), desc="Lock screen"),
-    Key([MOD, "shift"], K.LOGOUT, lazy.shutdown(), desc="Logout"),
+    Key([MOD], KEYS.TERMINAL, lazy.spawn(COMMANDS.TERMINAL), desc="Launch terminal"),
+    Key([MOD], KEYS.LAUNCHER, lazy.spawn(COMMANDS.LAUNCHER), desc="Application launcher"),
+    Key([MOD], KEYS.BROWSER, lazy.spawn(COMMANDS.BROWSER), desc="Launch browser"),
+    Key([MOD], KEYS.FILE_MANAGER, lazy.spawn(COMMANDS.FILE_MANAGER), desc="File manager"),
+    Key([MOD], KEYS.SYSTEM_MONITOR, lazy.spawn(f"{COMMANDS.TERMINAL} -e {COMMANDS.SYSTEM_MONITOR}"), desc="System monitor"),
+    Key([MOD], KEYS.KILL, lazy.window.kill(), desc="Kill focused window"),
+    Key([MOD], KEYS.DOWN, lazy.layout.down(), desc="Move focus down"),
+    Key([MOD], KEYS.UP, lazy.layout.up(), desc="Move focus up"),
+    Key([MOD], KEYS.LEFT, lazy.layout.left(), desc="Move focus left"),
+    Key([MOD], KEYS.RIGHT, lazy.layout.right(), desc="Move focus right"),
+    Key([MOD, "shift"], KEYS.DOWN, lazy.layout.shuffle_down(), desc="Move window down"),
+    Key([MOD, "shift"], KEYS.UP, lazy.layout.shuffle_up(), desc="Move window up"),
+    Key([MOD, "shift"], KEYS.LEFT, lazy.layout.shuffle_left(), desc="Move window left"),
+    Key([MOD, "shift"], KEYS.RIGHT, lazy.layout.shuffle_right(), desc="Move window right"),
+    Key([MOD, "control"], KEYS.DOWN, lazy.layout.grow_down(), desc="Grow window down"),
+    Key([MOD, "control"], KEYS.UP, lazy.layout.grow_up(), desc="Grow window up"),
+    Key([MOD, "control"], KEYS.LEFT, lazy.layout.grow_left(), desc="Grow window left"),
+    Key([MOD, "control"], KEYS.RIGHT, lazy.layout.grow_right(), desc="Grow window right"),
+    # Key([MOD], KEYS.PASTE, lazy.spawn("cliphist list | rofi -dmenu -display-columns 2 | cliphist decode | wl-copy"), desc="Open Clipboard History"),
+    Key([MOD], KEYS.NORMALIZE, lazy.layout.normalize(), desc="Reset all window sizes"),
+    Key([MOD], KEYS.FLOAT, lazy.layout.floating(), desc="Toggle floating layout"),
+    Key([MOD], KEYS.RESTART, lazy.restart(), desc="Restart qtile"),
+    Key([MOD, "shift"], KEYS.RESTART, lazy.reload_config(), desc="Reload qtile config"),
+    Key([MOD], KEYS.LOGOUT, lazy.spawn(COMMANDS.LOCK), desc="Lock screen"),
+    Key([MOD, "shift"], KEYS.LOGOUT, lazy.shutdown(), desc="Logout"),
 ]
 
 groups: list[Group] = [Group(name) for name in GROUPS]
@@ -177,7 +172,7 @@ def init_widgets_list() -> list[object]:
             fontsize=ICON_SIZE,
             foreground=COLORS["purple"],
             background=COLORS["bg"],
-            mouse_callbacks={"Button1": lambda: lazy.spawn(LAUNCHER)},
+            mouse_callbacks={"Button1": lambda: lazy.spawn(COMMANDS.LAUNCHER)},
         ),
         widget.GroupBox(
             font=FONT_NAME,

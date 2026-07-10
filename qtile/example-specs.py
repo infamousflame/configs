@@ -9,7 +9,7 @@
 # Modifier key (mod4 = Super/Windows key, mod1 = Alt)
 MOD = "mod4"
 
-class K:
+class KEYS:
     LEFT, DOWN, UP, RIGHT = "hjkl"
     TERMINAL = "Return"
     LAUNCHER = "x"
@@ -44,18 +44,6 @@ WALLPAPER_SWITCH_PERIOD: int = 0
 # Fallback background color if no wallpaper is set (Qtile Hex format)
 BACKGROUND_COLOR = "#1a1a2e"
 
-LOCK_COMMAND = "xscreensaver-command -lock"
-
-# ============================================================================
-# TERMINAL EMULATOR
-# ============================================================================
-
-# Your preferred terminal emulator
-# Examples: "kitty", "alacritty", "st", "gnome-terminal", "konsole"
-TERMINAL = "kitty"
-
-# Your preferred system monitor
-SYSTEM_MONITOR = "btop"
 
 # ============================================================================
 # FONTS
@@ -141,26 +129,28 @@ BAR_BACKGROUND_COLOR = "#282a36"
 BAR_POSITION = "top"
 
 # ============================================================================
-# APPLICATIONS (Optional)
+# COMMANDS
 # ============================================================================
 
-# Browser launcher command
-BROWSER = "firefox"
+class COMMANDS:
+    # Terminal emulator
+    TERMINAL = "kitty"
+    # System monitor
+    SYSTEM_MONITOR = "btop"
+    # Browser
+    BROWSER = "firefox"
+    # File manager
+    FILE_MANAGER = "thunar"
+    # Application launcher
+    LAUNCHER = "dmenu_run"
+    # Screenshot tool
+    SCREENSHOT_CMD = "scrot"
+    # Lock screen
+    LOCK = "xscreensaver-command -lock"
+    # Notification daemon
+    NOTIFICATION_DAEMON = "dunst"
 
-# File manager launcher command
-FILE_MANAGER = "thunar"
-
-# Application launcher (for dmenu-style launchers)
-# Examples: "dmenu_run", "rofi -dmenu", "wofi --show drun"
-LAUNCHER = "dmenu_run"
-
-# Screenshot tool command
-SCREENSHOT_CMD = "scrot"
-
-# ============================================================================
-# NOTIFICATION DAEMON
-# ============================================================================
-
-# Notification daemon to use
-# Examples: "dunst", "mako", "none" (for no daemon)
-NOTIFICATION_DAEMON = "dunst"
+    # Startup autostart commands
+    STARTUP_KEYRING = ["/usr/bin/gnome-keyring-daemon", "--start", "--components=secrets"]
+    STARTUP_CLIPBOARD_TEXT = ["wl-paste", "--type", "text", "--watch", "cliphist", "store"]
+    STARTUP_CLIPBOARD_IMAGE = ["wl-paste", "--type", "image", "--watch", "cliphist", "store"]
