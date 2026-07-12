@@ -21,8 +21,7 @@ class KEYS:
     FLOAT = "f"
     RESTART = "r"
     LOGOUT = "q"
-    COPY = "c"
-    PASTE = "v"
+    CAPTURE = "c"
 
 
 
