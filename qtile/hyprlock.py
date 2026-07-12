@@ -1,34 +1,37 @@
+from random import randint
+
 from libqtile.lazy import lazy
 
 from specs import COMMANDS
 
 @lazy.function
 def lock(qtile):
+    colour: str = f"rgba({randint(0, 255)}, {randint(0, 255)}, {randint(0, 255)}, 1.0)"
     with open("/dev/shm/hyprlock.conf", "w") as f:
-        f.write(CONFIG)
+        f.write(CONFIG.format(colour=colour))
     qtile.spawn(COMMANDS.LOCK)
 
 CONFIG = """# General Settings
-general {
+general {{
     disable_loading_bar = false
     hide_cursor = true
     grace = 0 # No grace period (locks immediately)
     no_fade_in = false
-}
+}}
 
 # Background: Plain for now
-background {
+background {{
     monitor =
-    color = rgba(0, 0, 0, 1)
+    color = {colour}
     blur_passes = 0
     contrast = 1.0
     brightness = 1.0
     vibrancy = 0.0
     vibrancy_darkness = 0.0
-}
+}}
 
 # Label: Digital Clock
-label {
+label {{
     monitor =
     text = cmd[update:1000] echo "$(date +'%H:%M:%S')"
     color = rgba(255, 255, 255, 0.9)
@@ -37,10 +40,10 @@ label {
     position = 0, -50
     halign = center
     valign = center
-}
+}}
 
 # Label: Date
-label {
+label {{
     monitor =
     text = cmd[update:1000] echo "$(date +'%A, %B %d')"
     color = rgba(255, 255, 255, 0.8)
@@ -49,10 +52,10 @@ label {
     position = 0, 100
     halign = center
     valign = center
-}
+}}
 
 # Input Field: Password Box
-input-field {
+input-field {{
     monitor =
     size = 250, 50
     outline_thickness = 2
@@ -69,5 +72,5 @@ input-field {
     halign = center
     valign = center
     rounding = 10
-}
+}}
 """
