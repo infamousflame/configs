@@ -5,7 +5,7 @@ from libqtile.lazy import lazy
 
 from specs import COMMANDS
 
-class TextColour:
+class TextColour(Enum):
     LIGHT: str = "rgba(255, 255, 255, 0.8)"
     DARK: str = "rgba(0, 0, 0, 0.8)"
 
