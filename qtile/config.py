@@ -1,3 +1,4 @@
+from os import remove
 from subprocess import Popen
 
 from libqtile import bar, hook, layout, qtile, widget
@@ -5,6 +6,8 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.hook import subscribe
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
+
+from hyprlock import lock
 
 try:
     from specs import (
@@ -44,6 +47,10 @@ def startup():
     Popen(COMMANDS.STARTUP_CLIPBOARD_TEXT)
     Popen(COMMANDS.STARTUP_CLIPBOARD_IMAGE)
 
+@subscribe.unlocked
+def unlock():
+    remove("/dev/shm/hyprlock.conf")
+
 keys: list[Key] = [
     Key([MOD], KEYS.TERMINAL, lazy.spawn(COMMANDS.TERMINAL), desc="Launch terminal"),
     Key([MOD], KEYS.LAUNCHER, lazy.spawn(COMMANDS.LAUNCHER), desc="Application launcher"),
@@ -70,7 +77,7 @@ keys: list[Key] = [
     Key([MOD], KEYS.FLOAT, lazy.layout.floating(), desc="Toggle floating layout"),
     Key([MOD], KEYS.RESTART, lazy.restart(), desc="Restart qtile"),
     Key([MOD, "shift"], KEYS.RESTART, lazy.reload_config(), desc="Reload qtile config"),
-    Key([MOD], KEYS.LOGOUT, lazy.spawn(COMMANDS.LOCK), desc="Lock screen"),
+    Key([MOD], KEYS.LOGOUT, lock(), desc="Lock screen"),
     Key([MOD, "shift"], KEYS.LOGOUT, lazy.shutdown(), desc="Logout"),
 ]
 

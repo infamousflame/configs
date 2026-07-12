@@ -147,7 +147,7 @@ class COMMANDS:
     SCREENSHOT = "slurp | grim -g - - | wl-copy --type image/png"
     SCREENSHOT_ANNOTATE = "slurp | grim -g - - | swappy -f - -o -"
     # Lock screen
-    LOCK = "xscreensaver-command -lock"
+    LOCK = "hyprlock --config /dev/shm/hyprlock.conf"
     # Notification daemon
     NOTIFICATION_DAEMON = "dunst"
 
