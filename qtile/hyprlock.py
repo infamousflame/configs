@@ -1,14 +1,21 @@
+from enum import Enum
 from random import randint
 
 from libqtile.lazy import lazy
 
 from specs import COMMANDS
 
+class TextColour:
+    LIGHT: str = "rgba(255, 255, 255, 0.8)"
+    DARK: str = "rgba(0, 0, 0, 0.8)"
+
 @lazy.function
 def lock(qtile):
-    colour: str = f"rgba({randint(0, 255)}, {randint(0, 255)}, {randint(0, 255)}, 1.0)"
+    colour: tuple[int, int, int] = (randint(0, 255), randint(0, 255), randint(0, 255))
+    colour_str: str = f"rgba({",".join(map(str, colour))}, 1.0)"
+    text_colour: str = TextColour.LIGHT if sum(colour) < 384 else TextColour.DARK
     with open("/dev/shm/hyprlock.conf", "w") as f:
-        f.write(CONFIG.format(colour=colour))
+        f.write(CONFIG.format(bg_colour=colour_str, text_colour=text_colour))
     qtile.spawn(COMMANDS.LOCK)
 
 CONFIG = """# General Settings
@@ -22,7 +29,7 @@ general {{
 # Background: Plain for now
 background {{
     monitor =
-    color = {colour}
+    color = {bg_colour}
     blur_passes = 0
     contrast = 1.0
     brightness = 1.0
@@ -34,7 +41,7 @@ background {{
 label {{
     monitor =
     text = cmd[update:1000] echo "$(date +'%H:%M:%S')"
-    color = rgba(255, 255, 255, 0.9)
+    color = {text_colour}
     font_size = 80
     font_family = Sans
     position = 0, -50
@@ -46,7 +53,7 @@ label {{
 label {{
     monitor =
     text = cmd[update:1000] echo "$(date +'%A, %B %d')"
-    color = rgba(255, 255, 255, 0.8)
+    color = {text_colour}
     font_size = 20
     font_family = Sans
     position = 0, 100
