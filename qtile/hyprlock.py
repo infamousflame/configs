@@ -14,9 +14,9 @@ class TextColour(StrEnum):
 @lazy.function
 def lock(qtile):
     colour: tuple[int, int, int] = (randint(0, 255), randint(0, 255), randint(0, 255))
-    colour_str: str = f"rgba({",".join(map(str, colour))}, 1.0)"
-    # text_colour: str
-    # complement_colour: str
+    bg_colour: str = f"rgba({",".join(map(str, colour))}, 1.0)"
+    text_colour: str
+    complement_colour: str
     text_colour, complement_colour = (
         (TextColour.LIGHT, TextColour.COMPLEMENT_DARK)
         if sum(colour) < 384 else
@@ -24,7 +24,7 @@ def lock(qtile):
     )
     with open("/dev/shm/hyprlock.conf", "w") as f:
         f.write(CONFIG.format(
-            bg_colour=colour_str,
+            bg_colour=bg_colour,
             text_colour=text_colour,
             complement_colour=complement_colour,
         ))
