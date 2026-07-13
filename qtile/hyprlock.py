@@ -1,21 +1,33 @@
-from enum import Enum
+from enum import StrEnum
 from random import randint
 
 from libqtile.lazy import lazy
 
 from specs import COMMANDS
 
-class TextColour(Enum):
+class TextColour(StrEnum):
     LIGHT: str = "rgba(255, 255, 255, 0.8)"
     DARK: str = "rgba(0, 0, 0, 0.8)"
+    COMPLEMENT_LIGHT: str = "rgba(255, 255, 255, 0.4)"
+    COMPLEMENT_DARK: str = "rgba(0, 0, 0, 0.4)"
 
 @lazy.function
 def lock(qtile):
     colour: tuple[int, int, int] = (randint(0, 255), randint(0, 255), randint(0, 255))
     colour_str: str = f"rgba({",".join(map(str, colour))}, 1.0)"
-    text_colour: str = TextColour.LIGHT if sum(colour) < 384 else TextColour.DARK
+    # text_colour: str
+    # complement_colour: str
+    text_colour, complement_colour = (
+        (TextColour.LIGHT, TextColour.COMPLEMENT_DARK)
+        if sum(colour) < 384 else
+        (TextColour.DARK, TextColour.COMPLEMENT_LIGHT)
+    )
     with open("/dev/shm/hyprlock.conf", "w") as f:
-        f.write(CONFIG.format(bg_colour=colour_str, text_colour=text_colour))
+        f.write(CONFIG.format(
+            bg_colour=colour_str,
+            text_colour=text_colour,
+            complement_colour=complement_colour,
+        ))
     qtile.spawn(COMMANDS.LOCK)
 
 CONFIG = """# General Settings
@@ -69,9 +81,9 @@ input-field {{
     dots_size = 0.25
     dots_spacing = 0.2
     dots_center = true
-    outer_color = rgba(200, 200, 200, 0.5)
-    inner_color = rgba(0, 0, 0, 0.5)
-    font_color = rgba(255, 255, 255, 0.9)
+    outer_color = {text_colour}
+    inner_color = {complement_colour}
+    font_color = {text_colour}
     fade_on_empty = true
     placeholder_text = <i>Password...</i>
     hide_input = false
