@@ -129,6 +129,6 @@ class COMMANDS:
     # Startup autostart commands
     STARTUP = [
         ["/usr/bin/gnome-keyring-daemon", "--start", "--components=secrets"],
-        ["wl-paste", "--type", "text", "--watch", "cliphist", "store"],
-        ["wl-paste", "--type", "image", "--watch", "cliphist", "store"],
+        # ["wl-paste", "--type", "text", "--watch", "cliphist", "store"],
+        # ["wl-paste", "--type", "image", "--watch", "cliphist", "store"],
     ]
