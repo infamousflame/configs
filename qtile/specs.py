@@ -22,6 +22,8 @@ class KEYS:
     RESTART = "r"
     LOGOUT = "l"
     CAPTURE = "c"
+    VOLUME_UP, VOLUME_DOWN, MUTE = "XF86AudioRaiseVolume", "XF86AudioLowerVolume", "XF86AudioMute"
+    BRIGHTNESS_UP, BRIGHTNESS_DOWN = "XF86MonBrightnessUp", "XF86MonBrightnessDown"
 
 
 
@@ -125,10 +127,19 @@ class COMMANDS:
     # Application launcher
     LAUNCHER = "rofi -show drun"
     # Screenshot tool
-    SCREENSHOT = "sh -c 'slurp | grim -g - - | wl-copy --type image/png'"
-    SCREENSHOT_ANNOTATE = "sh -c 'slurp | grim -g - - | swappy -f - -o - | wl-copy --type image/png'"
+    SCREENSHOT = "slurp | grim -g - - | wl-copy --type image/png"
+    SCREENSHOT_ANNOTATE = "slurp | grim -g - - | swappy -f - -o - | wl-copy --type image/png"
     # Lock screen
     LOCK = "hyprlock --config /dev/shm/hyprlock.conf"
+
+    # Brightness control
+    BRIGHTNESS_UP = "brightnessctl set +5%"
+    BRIGHTNESS_DOWN = "brightnessctl set 5%-"
+
+    # Volume control
+    VOLUME_UP = "pactl set-sink-volume @DEFAULT_SINK@ +5%"
+    VOLUME_DOWN = "pactl set-sink-volume @DEFAULT_SINK@ -5%"
+    MUTE = "pactl set-sink-mute @DEFAULT_SINK@ toggle"
 
     # Startup autostart commands
     STARTUP = [
