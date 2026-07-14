@@ -131,4 +131,6 @@ class COMMANDS:
         ["/usr/bin/gnome-keyring-daemon", "--start", "--components=secrets"],
         # ["wl-paste", "--type", "text", "--watch", "cliphist", "store"],
         # ["wl-paste", "--type", "image", "--watch", "cliphist", "store"],
+        ["dbus-update-activation-environment", "--systemd", "WAYLAND_DISPLAY", "XDG_CURRENT_DESKTOP=qtile"],
+        ["systemctl", "--user", "import-environment", "WAYLAND_DISPLAY", "XDG_CURRENT_DESKTOP"],
     ]
