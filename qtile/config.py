@@ -37,9 +37,8 @@ if not COMMANDS.TERMINAL:
 
 @subscribe.startup_once
 def startup():
-    Popen(COMMANDS.STARTUP_KEYRING)
-    Popen(COMMANDS.STARTUP_CLIPBOARD_TEXT)
-    Popen(COMMANDS.STARTUP_CLIPBOARD_IMAGE)
+    for cmd in COMMANDS.STARTUP:
+        Popen(cmd)
 
 @subscribe.unlocked
 def unlock():

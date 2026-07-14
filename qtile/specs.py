@@ -35,7 +35,7 @@ SCREENS: int = 2
 # Wallpaper background image path(s) (leave empty for solid color)
 # Examples: "/home/user/Pictures/wallpapers/mountain.png"
 #           ["/path/to/wp1.png", "/path/to/wp2.jpg"]  # Multiple wallpapers rotate
-WALLPAPER: list[str] = []
+WALLPAPER: list[str] = ["/usr/share/backgrounds/f44/default/f44-01-night.jxl", "/usr/share/backgrounds/f44/default/f44-01-day.jxl"]
 
 # Wallpaper switch period in seconds (0 to disable rotation)
 WALLPAPER_SWITCH_PERIOD: int = 3600
@@ -127,6 +127,8 @@ class COMMANDS:
     LOCK = "hyprlock --config /dev/shm/hyprlock.conf"
 
     # Startup autostart commands
-    STARTUP_KEYRING = ["/usr/bin/gnome-keyring-daemon", "--start", "--components=secrets"]
-    STARTUP_CLIPBOARD_TEXT = ["wl-paste", "--type", "text", "--watch", "cliphist", "store"]
-    STARTUP_CLIPBOARD_IMAGE = ["wl-paste", "--type", "image", "--watch", "cliphist", "store"]
+    STARTUP = [
+        ["/usr/bin/gnome-keyring-daemon", "--start", "--components=secrets"],
+        ["wl-paste", "--type", "text", "--watch", "cliphist", "store"],
+        ["wl-paste", "--type", "image", "--watch", "cliphist", "store"],
+    ]
