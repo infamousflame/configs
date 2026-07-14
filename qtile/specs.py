@@ -121,8 +121,8 @@ class COMMANDS:
     # Application launcher
     LAUNCHER = "rofi -show drun"
     # Screenshot tool
-    SCREENSHOT = "slurp | grim -g - - | wl-copy --type image/png"
-    SCREENSHOT_ANNOTATE = "slurp | grim -g - - | swappy -f - -o -"
+    SCREENSHOT = "sh -c 'slurp | grim -g - - | wl-copy --type image/png'"
+    SCREENSHOT_ANNOTATE = "sh -c 'slurp | grim -g - - | swappy -f - -o - | wl-copy --type image/png'"
     # Lock screen
     LOCK = "hyprlock --config /dev/shm/hyprlock.conf"
 
