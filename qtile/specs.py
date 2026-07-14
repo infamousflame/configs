@@ -57,27 +57,28 @@ ICON_SIZE = 14
 # ============================================================================
 
 # Border width for focused windows (pixels)
-BORDER_WIDTH = 2
+BORDER_WIDTH = 3
 
 # ============================================================================
-# COLORSCHEME (Dracula-inspired)
+# COLORSCHEME (Neon)
 # ============================================================================
 
 # These colors are used throughout the config for consistent theming
 COLORS = {
-    "bg": "#282a36",                # Background (dark)
-    "fg": "#f8f8f2",                # Foreground (light text)
-    "selected_bg": "#44475a",       # Selection/hover background
-    "selected_fg": "#f8f8f2",       # Selection/hover foreground
-    "cyan": "#8be9fd",              # Cyan accent
-    "green": "#50fa7b",             # Green accent
-    "orange": "#ffb86c",            # Orange accent
-    "pink": "#ff79c6",              # Pink accent
-    "purple": "#bd93f9",            # Purple accent
-    "red": "#ff5555",               # Red accent
-    "yellow": "#f1fa8c",            # Yellow accent
-    "focused_border": "#bd93f9",    # Dracula purple
-    "unfocused_border": "#44475a",  # Dracula gray
+    "bg": "#0a0a12",                # Near-black background
+    "fg": "#e0e0e0",                # Light gray foreground
+    "selected_bg": "#1a1a2e",       # Dark navy selection
+    "selected_fg": "#ffffff",       # Pure white selected text
+    "cyan": "#00f5d4",              # Neon teal
+    "green": "#7fff00",             # Neon chartreuse
+    "orange": "#ff6347",            # Neon tomato
+    "pink": "#ff006e",              # Neon hot pink
+    "purple": "#9b5de5",            # Neon violet
+    "red": "#ff4444",               # Bright red
+    "yellow": "#fee440",            # Neon yellow
+    "blue": "#00bbf9",              # Neon blue
+    "focused_border": "#00f5d4",    # Neon cyan
+    "unfocused_border": "#1a1a2e",  # Dark navy
 }
 
 # ============================================================================
@@ -104,6 +105,9 @@ WIDGET_ROUNDED = 5
 
 # Bar height in pixels
 BAR_HEIGHT = 40
+
+# Floating bar margins [top, right, bottom, left]
+BAR_MARGIN = [6, 10, 6, 10]
 
 # ============================================================================
 # COMMANDS
@@ -134,10 +138,3 @@ class COMMANDS:
         ["dbus-update-activation-environment", "--systemd", "WAYLAND_DISPLAY", "XDG_CURRENT_DESKTOP=qtile"],
         ["systemctl", "--user", "import-environment", "WAYLAND_DISPLAY", "XDG_CURRENT_DESKTOP"],
     ]
-    I like this qtile config at the moment, but I would appreciate it if it were slightly more stylish. It should be deserving of its dynamically changing lock screen (which I'm quite proud of, so don't change that).
-    - Perhaps the window borders could be rounded.
-    - The top bar could do with some style changes.
-    - Perhaps a neon-style design with random widget colours.
-    - If you think of anything else which might give it some unique style then include that in the plan.
-    - You can take inspiration from other public configs and even window managers, as qtile is quite versatile.
-    Whatever happens, the changes should not affect functionality - they should only be visual.

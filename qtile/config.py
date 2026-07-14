@@ -6,12 +6,15 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.hook import subscribe
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
+from qtile_extras.layout.decorations import RoundedCorners
+from qtile_extras.widget.decorations import GradientDecoration
 
 from hyprlock import lock
 
 try:
     from specs import (
         BAR_HEIGHT,
+        BAR_MARGIN,
         BORDER_WIDTH,
         COLORS,
         COMMANDS,
@@ -43,6 +46,10 @@ def startup():
 @subscribe.unlocked
 def unlock():
     remove("/dev/shm/hyprlock.conf")
+
+@subscribe.client_managed
+def set_window_opacity(win):
+    win.opacity = 0.95
 
 keys: list[Key] = [
     Key([MOD], KEYS.TERMINAL, lazy.spawn(COMMANDS.TERMINAL), desc="Launch terminal"),
@@ -96,61 +103,70 @@ for i, group in enumerate(groups):
 
 layouts: list[layout.Layout] = [
     layout.Plasma(
-        border_focus=COLORS["focused_border"],
-        border_normal=COLORS["unfocused_border"],
+        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=8),
+        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=8),
         border_width=BORDER_WIDTH,
         margin=8,
     ),
     layout.Columns(
-        border_focus=COLORS["focused_border"],
-        border_normal=COLORS["unfocused_border"],
+        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=8),
+        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=8),
         border_width=BORDER_WIDTH,
         margin=8,
         margin_on_single=True,
     ),
-    layout.Max(),
+    layout.Max(
+        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=8),
+        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=8),
+        border_width=BORDER_WIDTH,
+    ),
     layout.Floating(
-        border_focus=COLORS["focused_border"],
-        border_normal=COLORS["unfocused_border"],
+        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=8),
+        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=8),
         border_width=BORDER_WIDTH,
     ),
     layout.Bsp(
-        border_focus=COLORS["focused_border"],
-        border_normal=COLORS["unfocused_border"],
+        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=8),
+        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=8),
         border_width=BORDER_WIDTH,
         margin=8,
     ),
     layout.Matrix(
-        border_focus=COLORS["focused_border"],
-        border_normal=COLORS["unfocused_border"],
+        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=8),
+        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=8),
         border_width=BORDER_WIDTH,
         margin=8,
     ),
     layout.MonadThreeCol(
-        border_focus=COLORS["focused_border"],
-        border_normal=COLORS["unfocused_border"],
+        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=8),
+        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=8),
         border_width=BORDER_WIDTH,
         margin=8,
     ),
     layout.Spiral(
-        border_focus=COLORS["focused_border"],
-        border_normal=COLORS["unfocused_border"],
+        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=8),
+        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=8),
         border_width=BORDER_WIDTH,
         margin=8,
     ),
     layout.TreeTab(
-        border_focus=COLORS["focused_border"],
-        border_normal=COLORS["unfocused_border"],
+        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=8),
+        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=8),
         border_width=BORDER_WIDTH,
         margin=8,
     ),
     layout.Zoomy(
-        border_focus=COLORS["focused_border"],
-        border_normal=COLORS["unfocused_border"],
+        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=8),
+        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=8),
         border_width=BORDER_WIDTH,
         margin=8,
     ),
 ]
+
+NEON_GRADIENT = GradientDecoration(
+    colours=[COLORS["purple"], COLORS["pink"], COLORS["cyan"], COLORS["blue"], COLORS["purple"]],
+    whole_bar=True,
+)
 
 widget_defaults: dict[str, object] = dict(
     font=FONT_NAME,
@@ -168,13 +184,15 @@ def init_widgets_list() -> list[object]:
             linewidth=0,
             padding=2,
             background=COLORS["bg"],
+            decorations=[NEON_GRADIENT],
         ),
         widget.TextBox(
-            text="",
+            text="",
             fontsize=ICON_SIZE,
-            foreground=COLORS["purple"],
+            foreground=COLORS["fg"],
             background=COLORS["bg"],
             mouse_callbacks={"Button1": lambda: lazy.spawn(COMMANDS.LAUNCHER)},
+            decorations=[NEON_GRADIENT],
         ),
         widget.GroupBox(
             font=FONT_NAME,
@@ -184,51 +202,62 @@ def init_widgets_list() -> list[object]:
             padding_y=2,
             padding_x=3,
             borderwidth=2,
-            active=COLORS["fg"],
+            active=COLORS["selected_fg"],
             inactive=COLORS["selected_bg"],
             rounded=WIDGET_ROUNDED,
-            highlight_method="block",
+            highlight_method="text",
+            block_highlight_text_color=COLORS["cyan"],
             background=COLORS["bg"],
-            this_current_screen_border=COLORS["purple"],
+            this_current_screen_border=COLORS["cyan"],
             this_screen_border=COLORS["selected_bg"],
-            other_current_screen_border=COLORS["pink"],
+            other_current_screen_border=COLORS["blue"],
             other_screen_border=COLORS["selected_bg"],
             urgent_alert_method="text",
             urgent_text=COLORS["red"],
             urgent_background=COLORS["bg"],
+            decorations=[NEON_GRADIENT],
         ),
         widget.CurrentLayout(
             foreground=COLORS["fg"],
             background=COLORS["bg"],
             padding=2,
+            decorations=[NEON_GRADIENT],
         ),
         widget.TextBox(
             text="|",
             foreground=COLORS["pink"],
             background=COLORS["bg"],
             padding=2,
+            decorations=[NEON_GRADIENT],
         ),
         widget.WindowName(
             foreground=COLORS["fg"],
             background=COLORS["bg"],
             max_chars=20,
             width=150,
+            decorations=[NEON_GRADIENT],
         ),
         widget.Spacer(),
         widget.CPUGraph(
             graph_color=COLORS["green"],
+            fill_color=COLORS["green"] + "33",
             background=COLORS["bg"],
             padding=3,
+            decorations=[NEON_GRADIENT],
         ),
         widget.MemoryGraph(
             graph_color=COLORS["cyan"],
+            fill_color=COLORS["cyan"] + "33",
             background=COLORS["bg"],
             padding=3,
+            decorations=[NEON_GRADIENT],
         ),
         widget.NetGraph(
             graph_color=COLORS["orange"],
+            fill_color=COLORS["orange"] + "33",
             background=COLORS["bg"],
             padding=3,
+            decorations=[NEON_GRADIENT],
         ),
         widget.ThermalSensor(
             foreground=COLORS["yellow"],
@@ -237,6 +266,7 @@ def init_widgets_list() -> list[object]:
             threshold=80,
             fmt="🌡{}",
             show_short_text=False,
+            decorations=[NEON_GRADIENT],
         ),
         widget.Battery(
             foreground=COLORS["green"],
@@ -244,23 +274,26 @@ def init_widgets_list() -> list[object]:
             padding=3,
             format="{char} {percent:2.0%}",
             low_foreground=COLORS["red"],
-            charge_char="",
+            charge_char="",
             discharge_char=" ",
             empty_char=" ",
             unknown_char="?",
             show_short_text=False,
+            decorations=[NEON_GRADIENT],
         ),
         widget.Volume(
             foreground=COLORS["pink"],
             background=COLORS["bg"],
             padding=3,
-            fmt="  {}",
+            fmt=" {}",
+            decorations=[NEON_GRADIENT],
         ),
         widget.Clock(
             format="%a %b %d  %H:%M",
-            foreground=COLORS["purple"],
+            foreground=COLORS["fg"],
             background=COLORS["bg"],
             padding=3,
+            decorations=[NEON_GRADIENT],
         ),
     ]
 
@@ -291,9 +324,10 @@ def init_screens() -> list[Screen]:
             top=bar.Bar(
                 widgets=init_widgets_list(),
                 size=BAR_HEIGHT,
-                background=COLORS["bg"],
+                background="#00000000",
                 opacity=1,
-                margin=[0, 0, 0, 0],
+                margin=BAR_MARGIN,
+                border_width=[0, 0, 0, 0],
             ),
             wallpaper=get_current_wallpaper(),
             wallpaper_mode="fill" if wallpapers else None,
@@ -328,8 +362,8 @@ floats_kept_above: bool = True
 cursor_warp: bool = False
 
 floating_layout: layout.Floating = layout.Floating(
-    border_focus=COLORS["focused_border"],
-    border_normal=COLORS["unfocused_border"],
+    border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=8),
+    border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=8),
     border_width=BORDER_WIDTH,
     float_rules=[
         *layout.Floating.default_float_rules,
