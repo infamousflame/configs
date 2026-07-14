@@ -129,8 +129,15 @@ class COMMANDS:
     # Startup autostart commands
     STARTUP = [
         ["/usr/bin/gnome-keyring-daemon", "--start", "--components=secrets"],
-        # ["wl-paste", "--type", "text", "--watch", "cliphist", "store"],
-        # ["wl-paste", "--type", "image", "--watch", "cliphist", "store"],
+        ["wl-paste", "--type", "text", "--watch", "cliphist", "store"],
+        ["wl-paste", "--type", "image", "--watch", "cliphist", "store"],
         ["dbus-update-activation-environment", "--systemd", "WAYLAND_DISPLAY", "XDG_CURRENT_DESKTOP=qtile"],
         ["systemctl", "--user", "import-environment", "WAYLAND_DISPLAY", "XDG_CURRENT_DESKTOP"],
     ]
+    I like this qtile config at the moment, but I would appreciate it if it were slightly more stylish. It should be deserving of its dynamically changing lock screen (which I'm quite proud of, so don't change that).
+    - Perhaps the window borders could be rounded.
+    - The top bar could do with some style changes.
+    - Perhaps a neon-style design with random widget colours.
+    - If you think of anything else which might give it some unique style then include that in the plan.
+    - You can take inspiration from other public configs and even window managers, as qtile is quite versatile.
+    Whatever happens, the changes should not affect functionality - they should only be visual.
