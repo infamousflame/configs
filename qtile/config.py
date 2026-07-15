@@ -2,6 +2,7 @@ from os import remove
 from subprocess import Popen
 
 from libqtile import bar, hook, layout, qtile, widget
+from libqtile.backend.wayland import InputConfig
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.hook import subscribe
 from libqtile.lazy import lazy
@@ -407,6 +408,8 @@ auto_fullscreen: bool = True
 focus_on_window_activation: str = "smart"
 reconfigure_screens: bool = True
 auto_minimize: bool = True
-wl_input_rules: str | None = None
 wl_xcursor_theme: str | None = None
 wl_xcursor_size: int = 24
+wl_input_rules: dict[str, InputConfig] = {
+    "type:touchpad": InputConfig(tap=True, natural_scroll=False),
+}
