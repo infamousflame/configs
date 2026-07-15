@@ -1,0 +1,69 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "diagnostics": {
+    "lsp_pull_diagnostics": {
+      "enabled": true
+    }
+  },
+  "completions": {
+    "lsp": true
+  },
+  "helix_mode": false,
+  "cli_default_open_behavior": "new_window",
+  "project_panel": {
+    "dock": "left"
+  },
+  "outline_panel": {
+    "dock": "left"
+  },
+  "collaboration_panel": {
+    "dock": "left"
+  },
+  "agent": {
+    "dock": "right",
+    "favorite_models": [],
+    "model_parameters": []
+  },
+  "git_panel": {
+    "dock": "left"
+  },
+  "vim_mode": false,
+  "terminal": {
+    "font_family": "MonaspiceKr Nerd Font"
+  },
+  "icon_theme": {
+    "mode": "dark",
+    "light": "Zed (Default)",
+    "dark": "Zed (Default)"
+  },
+  "base_keymap": "VSCode",
+  "ui_font_size": 16,
+  "buffer_font_size": 15,
+  "theme": {
+    "mode": "dark",
+    "light": "Ayu Light",
+    "dark": "One Dark"
+  },
+  "lsp": {
+      "tinymist": {
+        "initialization_options": {
+          "preview": {
+            "background": {
+              "enabled": true,
+              // "args": [
+              //   "--data-plane-host=127.0.0.1:23635",
+              //   "--invert-colors=never"
+              // ]
+            }
+          }
+        }
+      }
+    }
+}
