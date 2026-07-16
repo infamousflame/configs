@@ -16,6 +16,7 @@ try:
     from specs import (
         BAR_HEIGHT,
         BAR_MARGIN,
+        BORDER_RADIUS,
         BORDER_WIDTH,
         COLORS,
         COMMANDS,
@@ -30,6 +31,7 @@ try:
         WALLPAPER_SWITCH_PERIOD,
         WIDGET_PADDING,
         WIDGET_ROUNDED,
+        WINDOW_MARGIN,
     )
 except ImportError:
     print("specs.py not found! Please create it from the example.")
@@ -109,63 +111,63 @@ for i, group in enumerate(groups):
 
 layouts: list[layout.Layout] = [
     layout.Plasma(
-        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=8),
-        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=8),
+        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=BORDER_RADIUS),
+        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=BORDER_RADIUS),
         border_width=BORDER_WIDTH,
-        margin=8,
+        margin=WINDOW_MARGIN,
     ),
     layout.Columns(
-        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=8),
-        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=8),
+        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=BORDER_RADIUS),
+        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=BORDER_RADIUS),
         border_width=BORDER_WIDTH,
-        margin=8,
+        margin=WINDOW_MARGIN,
         margin_on_single=True,
     ),
     layout.Max(
-        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=8),
-        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=8),
+        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=BORDER_RADIUS),
+        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=BORDER_RADIUS),
         border_width=BORDER_WIDTH,
     ),
     layout.Floating(
-        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=8),
-        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=8),
+        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=BORDER_RADIUS),
+        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=BORDER_RADIUS),
         border_width=BORDER_WIDTH,
     ),
     layout.Bsp(
-        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=8),
-        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=8),
+        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=BORDER_RADIUS),
+        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=BORDER_RADIUS),
         border_width=BORDER_WIDTH,
-        margin=8,
+        margin=WINDOW_MARGIN,
     ),
     layout.Matrix(
-        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=8),
-        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=8),
+        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=BORDER_RADIUS),
+        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=BORDER_RADIUS),
         border_width=BORDER_WIDTH,
-        margin=8,
+        margin=WINDOW_MARGIN,
     ),
     layout.MonadThreeCol(
-        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=8),
-        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=8),
+        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=BORDER_RADIUS),
+        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=BORDER_RADIUS),
         border_width=BORDER_WIDTH,
-        margin=8,
+        margin=WINDOW_MARGIN,
     ),
     layout.Spiral(
-        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=8),
-        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=8),
+        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=BORDER_RADIUS),
+        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=BORDER_RADIUS),
         border_width=BORDER_WIDTH,
-        margin=8,
+        margin=WINDOW_MARGIN,
     ),
     layout.TreeTab(
-        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=8),
-        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=8),
+        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=BORDER_RADIUS),
+        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=BORDER_RADIUS),
         border_width=BORDER_WIDTH,
-        margin=8,
+        margin=WINDOW_MARGIN,
     ),
     layout.Zoomy(
-        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=8),
-        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=8),
+        border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=BORDER_RADIUS),
+        border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=BORDER_RADIUS),
         border_width=BORDER_WIDTH,
-        margin=8,
+        margin=WINDOW_MARGIN,
     ),
 ]
 
@@ -368,8 +370,8 @@ floats_kept_above: bool = True
 cursor_warp: bool = False
 
 floating_layout: layout.Floating = layout.Floating(
-    border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=8),
-    border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=8),
+    border_focus=RoundedCorners(colour=COLORS["focused_border"], radius=BORDER_RADIUS),
+    border_normal=RoundedCorners(colour=COLORS["unfocused_border"], radius=BORDER_RADIUS),
     border_width=BORDER_WIDTH,
     float_rules=[
         *layout.Floating.default_float_rules,

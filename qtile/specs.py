@@ -61,6 +61,12 @@ ICON_SIZE = 14
 # Border width for focused windows (pixels)
 BORDER_WIDTH = 3
 
+# Radius for border corners (pixels)
+BORDER_RADIUS = 8
+
+# Window margin (pixels)
+WINDOW_MARGIN = 8
+
 # ============================================================================
 # COLORSCHEME (Neon)
 # ============================================================================
