@@ -6,10 +6,6 @@ from libqtile.lazy import lazy
 
 from specs import COMMANDS
 
-def cleanup():
-    remove("/dev/shm/rofi.rasi")
-    remove("/dev/shm/neon.rasi")
-
 @lazy.function
 def launcher(qtile):
     with open("/dev/shm/rofi.rasi", "w") as f:
@@ -20,7 +16,8 @@ def launcher(qtile):
     def wait_and_cleanup():
         proc = Popen(COMMANDS.LAUNCHER)
         proc.wait()
-        cleanup()
+        remove("/dev/shm/rofi.rasi")
+        remove("/dev/shm/neon.rasi")
 
     Thread(target=wait_and_cleanup).start()
 
