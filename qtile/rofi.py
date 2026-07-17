@@ -4,14 +4,18 @@ from threading import Thread
 
 from libqtile.lazy import lazy
 
+from colour import generate_colour
 from specs import COMMANDS
 
 @lazy.function
 def launcher(qtile):
+    colour: tuple[int, int, int] = generate_colour()
+    accent: str = f"#{colour[0]:02x}{colour[1]:02x}{colour[2]:02x}"
+
     with open("/dev/shm/rofi.rasi", "w") as f:
         f.write(CONFIG)
     with open("/dev/shm/neon.rasi", "w") as f:
-        f.write(THEME)
+        f.write(THEME.format(accent=accent))
 
     def wait_and_cleanup():
         proc = Popen(COMMANDS.LAUNCHER)
@@ -33,17 +37,17 @@ CONFIG = """configuration {
 @theme "neon"
 """
 
-THEME = """* {
+THEME = """* {{
   bg: #0a0a12;
   bg-fill: rgba(10, 10, 18, 95%);
   fg: #ffffff;
-  accent: #00f3ff;
+  accent: {accent};
   accent-alt: #ff00ff;
-  border: #00f3ff;
+  border: {accent};
   urgent: #ff2a2a;
-}
+}}
 
-window {
+window {{
   width: 400px;
   background-color: @bg-fill;
   border: 2px solid;
@@ -53,45 +57,45 @@ window {
   shadow: true;
   shadow-color: @accent;
   shadow-offset: 0px 0px 15px;
-}
+}}
 
-mainbox {
+mainbox {{
   background-color: transparent;
   /* Removed 'prompt' from children to hide the 'drun' label entirely */
   children: [inputbar, message, listview];
   spacing: 10px;
-}
+}}
 
-inputbar {
+inputbar {{
   background-color: transparent; /* Fully transparent background */
   border-radius: 8px;
   padding: 8px;
   text-color: @fg; /* White text matches menu */
   children: [entry]; /* Drop the nested 'prompt' widget so "drun" text doesn't show */
-}
+}}
 
 /* Ensure the entry field (where you type) is transparent */
-entry {
+entry {{
   background-color: transparent;
   text-color: @fg;
   cursor: text;
   placeholder: "Search apps...";
   placeholder-color: #6a6a8a;
-}
+}}
 
 /* Highlight text color when typing/focused */
-entry selected {
+entry selected {{
   background-color: transparent;
   text-color: @accent;
-}
+}}
 
-message {
+message {{
   background-color: transparent;
   text-color: @accent;
   margin: 5px 0;
-}
+}}
 
-listview {
+listview {{
   background-color: transparent;
   columns: 1;
   lines: 8;
@@ -103,47 +107,47 @@ listview {
   fixed-height: true;
   fixed-columns: true;
   spacing: 6px;
-}
+}}
 
-element {
+element {{
   background-color: transparent;
   padding: 8px 10px;
   border-radius: 6px;
   text-color: @fg;
-}
+}}
 
-element-text {
+element-text {{
   background-color: transparent;
   text-color: inherit;
-}
+}}
 
-element-icon {
+element-icon {{
   background-color: transparent;
   text-color: inherit;
-}
+}}
 
-element selected {
+element selected {{
   background-color: transparent;
   border: 1px solid;
   text-color: @accent;
-}
+}}
 
-element-text selected {
+element-text selected {{
   background-color: transparent;
   text-color: @accent;
-}
+}}
 
-element-icon selected {
+element-icon selected {{
   background-color: transparent;
   text-color: @accent;
-}
+}}
 
-element alternate {
+element alternate {{
   background-color: transparent;
-}
+}}
 
-element urgent {
+element urgent {{
   background-color: rgba(255, 42, 42, 0.2);
   text-color: #ffaaaa;
-}
+}}
 """

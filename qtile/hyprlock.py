@@ -3,6 +3,7 @@ from random import randint
 
 from libqtile.lazy import lazy
 
+from colour import generate_colour
 from specs import COMMANDS
 
 class TextColour(StrEnum):
@@ -13,7 +14,7 @@ class TextColour(StrEnum):
 
 @lazy.function
 def lock(qtile):
-    colour: tuple[int, int, int] = (randint(0, 255), randint(0, 255), randint(0, 255))
+    colour: tuple[int, int, int] = generate_colour()
     bg_colour: str = f"rgba({",".join(map(str, colour))}, 1.0)"
     text_colour: str
     complement_colour: str
