@@ -290,6 +290,7 @@ def init_widgets_list() -> list[object]:
             unknown_char="?",
             show_short_text=False,
             decorations=[NEON_GRADIENT],
+            battery="BAT0",
         ),
         widget.Volume(
             foreground=COLORS["pink"],
