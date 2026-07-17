@@ -11,6 +11,8 @@ from qtile_extras.layout.decorations import RoundedCorners
 from qtile_extras.widget.decorations import GradientDecoration
 
 from hyprlock import lock
+from rofi import launcher
+
 
 try:
     from specs import (
@@ -56,7 +58,7 @@ def set_window_opacity(win):
 
 keys: list[Key] = [
     Key([MOD], KEYS.TERMINAL, lazy.spawn(COMMANDS.TERMINAL), desc="Launch terminal"),
-    Key([MOD], KEYS.LAUNCHER, lazy.spawn(COMMANDS.LAUNCHER), desc="Application launcher"),
+    Key([MOD], KEYS.LAUNCHER, launcher(), desc="Application launcher"),
     Key([MOD], KEYS.BROWSER, lazy.spawn(COMMANDS.BROWSER), desc="Launch browser"),
     Key([MOD], KEYS.FILE_MANAGER, lazy.spawn(COMMANDS.FILE_MANAGER), desc="File manager"),
     Key([MOD], KEYS.SYSTEM_MONITOR, lazy.spawn(f"{COMMANDS.TERMINAL} -e {COMMANDS.SYSTEM_MONITOR}"), desc="System monitor"),
