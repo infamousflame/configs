@@ -1,6 +1,14 @@
+from os import remove
+from subprocess import Popen
+from threading import Thread
+
 from libqtile.lazy import lazy
 
 from specs import COMMANDS
+
+def cleanup():
+    remove("/dev/shm/rofi.rasi")
+    remove("/dev/shm/neon.rasi")
 
 @lazy.function
 def launcher(qtile):
@@ -8,7 +16,14 @@ def launcher(qtile):
         f.write(CONFIG)
     with open("/dev/shm/neon.rasi", "w") as f:
         f.write(THEME)
-    qtile.spawn(COMMANDS.LAUNCHER)
+
+    def wait_and_cleanup():
+        proc = Popen(COMMANDS.LAUNCHER)
+        proc.wait()
+        cleanup()
+
+    Thread(target=wait_and_cleanup).start()
+
 
 CONFIG = """configuration {
   modi: "drun,run,window";

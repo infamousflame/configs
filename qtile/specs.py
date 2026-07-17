@@ -131,7 +131,7 @@ class COMMANDS:
     # File manager
     FILE_MANAGER = "pcmanfm"
     # Application launcher
-    LAUNCHER = "rofi -show drun -config /dev/shm/rofi.rasi"
+    LAUNCHER = ["rofi", "-show", "drun", "-config", "/dev/shm/rofi.rasi"]
     # Screenshot tool
     SCREENSHOT = "slurp | grim -g - - | wl-copy --type image/png"
     SCREENSHOT_ANNOTATE = "slurp | grim -g - - | swappy -f - -o - | wl-copy --type image/png"
