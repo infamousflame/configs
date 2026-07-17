@@ -20,7 +20,7 @@ def lock(qtile):
     complement_colour: str
     text_colour, complement_colour = (
         (TextColour.LIGHT, TextColour.COMPLEMENT_DARK)
-        if sum(colour) < 384 else
+        if sum(colour) < 383 else
         (TextColour.DARK, TextColour.COMPLEMENT_LIGHT)
     )
     with open("/dev/shm/hyprlock.conf", "w") as f:
