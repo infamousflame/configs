@@ -18,7 +18,7 @@ class KEYS:
     SYSTEM_MONITOR = "s"
     KILL = "w"
     NORMALIZE = "n"
-    FLOAT = "f"
+    FLOAT = "t"
     RESTART = "r"
     LOGOUT = "l"
     CAPTURE = "c"
