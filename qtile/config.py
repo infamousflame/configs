@@ -1,4 +1,5 @@
 from os import remove
+from random import choice
 from subprocess import Popen
 
 from libqtile import bar, hook, layout, qtile, widget
@@ -311,24 +312,12 @@ def init_widgets_list() -> list[object]:
 
 def init_screens() -> list[Screen]:
     wallpapers: list[str] = WALLPAPER if WALLPAPER else []
-    current_wallpaper_index: int = 0
 
-    def get_current_wallpaper() -> str | None:
+    def get_wallpaper() -> str | None:
         if wallpapers:
-            return wallpapers[current_wallpaper_index]
+            return choice(wallpapers)
         return None
 
-    def switch_wallpaper() -> None:
-        qtile.call_later(WALLPAPER_SWITCH_PERIOD, switch_wallpaper)
-        nonlocal current_wallpaper_index
-        if wallpapers:
-            current_wallpaper_index = (current_wallpaper_index + 1) % len(wallpapers)
-            wallpaper = wallpapers[current_wallpaper_index]
-            for screen in qtile.screens:
-                screen.cmd_set_wallpaper(wallpaper, mode="fill")
-
-    if wallpapers and WALLPAPER_SWITCH_PERIOD > 0:
-        qtile.call_later(WALLPAPER_SWITCH_PERIOD, switch_wallpaper)
 
     screens: list[Screen] = [
         Screen(
@@ -340,7 +329,7 @@ def init_screens() -> list[Screen]:
                 margin=BAR_MARGIN,
                 border_width=[0, 0, 0, 0],
             ),
-            wallpaper=get_current_wallpaper(),
+            wallpaper=get_wallpaper(),
             wallpaper_mode="fill" if wallpapers else None,
         ) for _ in range(SCREENS)
     ]
