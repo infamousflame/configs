@@ -31,7 +31,7 @@ class KEYS:
 # DISPLAY SETTINGS
 # ============================================================================
 
-# Maximum number of monitors you need
+# Maximum number of monitors (actual count detected dynamically)
 SCREENS: int = 2
 
 # Wallpaper background image path(s) (leave empty for solid color)

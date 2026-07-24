@@ -310,8 +310,9 @@ def init_widgets_list() -> list[object]:
     ]
 
 
-def init_screens() -> list[Screen]:
+def init_screens(output_info) -> list[Screen]:
     wallpapers: list[str] = WALLPAPER if WALLPAPER else []
+    num_screens = min(len(output_info), SCREENS)
 
     def get_wallpaper() -> str | None:
         if wallpapers:
@@ -331,12 +332,12 @@ def init_screens() -> list[Screen]:
             ),
             wallpaper=get_wallpaper(),
             wallpaper_mode="fill" if wallpapers else None,
-        ) for _ in range(SCREENS)
+        ) for _ in range(num_screens)
     ]
     return screens
 
 
-screens: list[Screen] = init_screens()
+generate_screens = init_screens
 
 mouse: list[Click | Drag] = [
     Drag(
