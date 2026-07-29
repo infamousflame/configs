@@ -10,12 +10,13 @@
 MOD = "mod4"
 
 class KEYS:
-    LEFT, DOWN, UP, RIGHT = "uiop"
+    LEFT, DOWN, UP, RIGHT = "yuio"
     TERMINAL = "Return"
     LAUNCHER = "x"
     BROWSER = "b"
     FILE_MANAGER = "f"
     SYSTEM_MONITOR = "s"
+    PYTHON = "p"
     KILL = "w"
     NORMALIZE = "n"
     FLOAT = "t"
@@ -130,6 +131,8 @@ class COMMANDS:
     BROWSER = "brave-origin"
     # File manager
     FILE_MANAGER = "pcmanfm"
+    # Python shell
+    PYTHON = "python3"
     # Application launcher
     LAUNCHER = ["rofi", "-show", "drun", "-config", "/dev/shm/rofi.rasi"]
     # Screenshot tool

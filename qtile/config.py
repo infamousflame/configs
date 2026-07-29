@@ -63,6 +63,7 @@ keys: list[Key] = [
     Key([MOD], KEYS.BROWSER, lazy.spawn(COMMANDS.BROWSER), desc="Launch browser"),
     Key([MOD], KEYS.FILE_MANAGER, lazy.spawn(COMMANDS.FILE_MANAGER), desc="File manager"),
     Key([MOD], KEYS.SYSTEM_MONITOR, lazy.spawn(f"{COMMANDS.TERMINAL} -e {COMMANDS.SYSTEM_MONITOR}"), desc="System monitor"),
+    Key([MOD], KEYS.PYTHON, lazy.spawn(f"{COMMANDS.TERMINAL} -e {COMMANDS.PYTHON}"), desc="Python"),
     Key([MOD], KEYS.KILL, lazy.window.kill(), desc="Kill focused window"),
     Key([MOD], KEYS.DOWN, lazy.layout.down(), desc="Move focus down"),
     Key([MOD], KEYS.UP, lazy.layout.up(), desc="Move focus up"),
