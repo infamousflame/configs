@@ -2,7 +2,7 @@ from os import remove
 from random import choice
 from subprocess import Popen
 
-from libqtile import bar, hook, layout, qtile, widget
+from libqtile import bar, layout, qtile, widget
 from libqtile.backend.wayland import InputConfig
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.hook import subscribe
