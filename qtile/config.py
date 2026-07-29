@@ -1,7 +1,6 @@
 from os import remove
 from random import choice
 from subprocess import Popen
-from threading import Timer
 
 from libqtile import bar, hook, layout, qtile, widget
 from libqtile.backend.wayland import InputConfig
@@ -43,29 +42,6 @@ except ImportError:
 
 if not COMMANDS.TERMINAL:
     COMMANDS.TERMINAL = guess_terminal()
-
-
-# Debounce screen reconfiguration to avoid DRM atomic commit EBUSY errors
-# when monitors are connected/disconnected rapidly.
-_screen_change_timer: Timer | None = None
-
-
-def _debounced_reconfigure_screens():
-    global _screen_change_timer
-    _screen_change_timer = None
-    try:
-        qtile.reconfigure_screens()
-    except Exception:
-        pass
-
-
-@subscribe.screen_change
-def on_screen_change(event):
-    global _screen_change_timer
-    if _screen_change_timer is not None:
-        _screen_change_timer.cancel()
-    _screen_change_timer = Timer(0.5, _debounced_reconfigure_screens)
-    _screen_change_timer.start()
 
 
 @subscribe.startup_once
@@ -425,7 +401,7 @@ floating_layout: layout.Floating = layout.Floating(
 
 auto_fullscreen: bool = True
 focus_on_window_activation: str = "smart"
-reconfigure_screens: bool = False
+reconfigure_screens: bool = True
 auto_minimize: bool = True
 wl_xcursor_theme: str | None = None
 wl_xcursor_size: int = 24
