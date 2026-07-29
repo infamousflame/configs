@@ -86,8 +86,8 @@ keys: list[Key] = [
     Key([MOD, "shift"], KEYS.CAPTURE, lazy.spawn(COMMANDS.SCREENSHOT_ANNOTATE, shell=True), desc="Take screenshot with annotation"),
     Key([MOD], KEYS.NORMALIZE, lazy.layout.normalize(), desc="Reset all window sizes"),
     Key([MOD], KEYS.FLOAT, lazy.layout.floating(), desc="Toggle floating layout"),
-    Key([MOD], KEYS.RESTART, lazy.restart(), desc="Restart qtile"),
-    Key([MOD, "shift"], KEYS.RESTART, lazy.reload_config(), desc="Reload qtile config"),
+    Key([MOD], KEYS.RESTART, lazy.reload_config(), desc="Restart qtile"),
+    Key([MOD, "shift"], KEYS.RESTART, lazy.restart(), desc="Reload qtile config"),
     Key([MOD], KEYS.LOGOUT, lock(), desc="Lock screen"),
     Key([MOD, "shift"], KEYS.LOGOUT, lazy.shutdown(), desc="Logout"),
 ]
