@@ -1,3 +1,6 @@
 [editor.soft-wrap]
 enable = true
-wrap-indicator = "" # Set to "" to hide the default "↪" indicator   
+wrap-indicator = "" # Set to "" to hide the default "↪" indicator
+
+[keys.normal]
+"C-p" = ':lsp-workspace-command tinymist.pinMain "%sh{realpath %{buffer_name}}"'
