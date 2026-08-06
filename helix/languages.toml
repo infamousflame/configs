@@ -13,6 +13,16 @@ command = "ty"
 args = ["server"]
 
 [[language]]
+name = "rust"
+auto-format = true
+
+[language-server.rust-analyzer.config]
+# Optional: Enable clippy for better linting on save
+checkOnSave = { command = "clippy" }
+# Optional: Enable all cargo features for better analysis
+cargo = { allFeatures = true }
+
+[[language]]
 name = "typst"
 language-servers = ["tinymist"]
 
