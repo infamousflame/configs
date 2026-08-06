@@ -1,3 +1,21 @@
+[[language]]
+name = "python"
+language-servers = ["ruff", "ty"]
+auto-format = true
+formatter = { command = "ruff", args = ["format", "-"] }
+
+[language-server.ruff]
+command = "ruff"
+args = ["server"]
+
+[language-server.ty]
+command = "ty"
+args = ["server"]
+
+[[language]]
+name = "typst"
+language-servers = ["tinymist"]
+
 [language-server.tinymist]
 command = "tinymist"
 config.preview.background.enabled = true
@@ -6,8 +24,3 @@ config.preview.background.args = [
   "--invert-colors=never",
   "--open"
 ]
-
-[[language]]
-name = "typst"
-language-servers = ["tinymist"]
-
