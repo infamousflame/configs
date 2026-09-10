@@ -1,5 +1,5 @@
 alias ll='ls -la --color=auto'
 alias copy='wl-copy'
-alias grepc='grep --color=auto'
-alias mkpar='mkdir -pv'
+alias grep='grep --color=auto'
+alias mkdir='mkdir -pv'
 alias sudo='sudo -i'
