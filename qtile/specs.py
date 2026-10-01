@@ -126,11 +126,11 @@ class COMMANDS:
     # Terminal emulator
     TERMINAL = "kitty"
     # System monitor
-    SYSTEM_MONITOR = "btop"
+    SYSTEM_MONITOR = "kitty -e btop"
     # Browser
     BROWSER = "brave-origin"
     # File manager
-    FILE_MANAGER = "pcmanfm"
+    FILE_MANAGER = "kitty -e spf"
     # Python shell
     PYTHON = "python3"
     # Application launcher
